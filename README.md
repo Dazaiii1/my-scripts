@@ -1,2 +1,1 @@
-# my-scripts
-I will put here my small automation scripts
+I will put here my small automation scripts :)
