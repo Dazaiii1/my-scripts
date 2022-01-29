@@ -2,6 +2,8 @@
 mkdir results
 mkdir tld-enum
 
+# Takes file as first argument ( for example the output of bbscope : https://github.com/sw33tLie/bbscope)
+
 # Grab ip addresses and ranges
 cat $1 | grep '[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}' | tee results/ips.txt &> /dev/null
 
