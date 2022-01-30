@@ -1,7 +1,7 @@
 if [ $1 = '-h' ]
 then 
 	echo "Example: "
-	echo "./tld-enum.sh urls.txt tlds.txt"
+	echo "./tld-enum.sh urls.txt tlds.txt output.txt"
   echo "Note 1 : urls.txt contains lines like "
   echo "company.*"
   echo "company2.*"
@@ -10,6 +10,6 @@ then
 
 else
 
-sed 's/\.\*//' $1  |  while read url do; do ffuf -u https://$url.FUZZ/ -w $2 -s | while read tld do; do echo $url.$tld ;done ;done
+sed 's/\.\*//' $1  |  while read url do; do ffuf -u https://$url.FUZZ/ -w $2 -s | while read tld do; do echo $url.$tld | tee -a $3 ;done ;done
 
 fi
