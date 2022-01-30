@@ -14,7 +14,7 @@ else
 
 	# Filter Wildcard Domains to be able to run Subdomain Enumeration on 'em
 
-	cat $1 | grep '\*' | sed 's/http:\/\///;s/https:\/\///;s/^\*\.//;s/^[\*]\{1,2\}[a-z]\{1,100\}\*//;s/^[a-z]\{1,50\}\*//;s/[A-Za-z]\{1,50\}\.\*\.//;'s/^\*//';s/^[A-Za-z]\{1,50\}\-\*//;s/\-[A-Za-z]\{1,50\}\-\*\.//;s/^\.//' | grep -v "github\.com" | grep '[A-Za-z]' | sed 's/\/\*//' | cut -d "/" -f1 | grep "\." | grep -v "\.\*" | grep '\*' | sed 's/\,/\n/g' | sed 's/\*\.//;s/(\*)\.//' | tee results/wildcard.txt &> /dev/null
+	cat $1 | grep '\*' | sed 's/http:\/\///;s/https:\/\///;s/^\*\.//;s/^[\*]\{1,2\}[a-z]\{1,100\}\*//;s/^[a-z]\{1,50\}\*//;s/[A-Za-z]\{1,50\}\.\*\.//;s/^\.//' | grep -v "github\.com" | grep '[A-Za-z]' | sed 's/\/\*//' | cut -d "/" -f1 | grep "\." | grep -v "\.\*" | tee results/wildcard.txt &> /dev/null
 
 	cat $1 | grep '\*' | sed 's/http:\/\///;s/https:\/\///;s/^\*\.//;s/^[\*]\{1,2\}[a-z]\{1,100\}\*//;s/^[a-z]\{1,50\}\*//;s/[A-Za-z]\{1,50\}\.\*\.//;s/^\.//' | grep -v "github\.com" | grep '[A-Za-z]' | sed 's/\/\*//' | cut -d "/" -f1 | grep "\." | grep "\.\*" | tee tld-enum/urls.txt &> /dev/null
 
