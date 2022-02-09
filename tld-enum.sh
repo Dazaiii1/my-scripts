@@ -7,6 +7,7 @@ then
   echo "company2.*"
   echo "Note 2 : tlds.txt" 
   echo "download it from https://gist.githubusercontent.com/wridgers/1968862/raw/ca71d75354fc2fc833a62a00f15f5dc0180b2ee9/tlds.txt"
+  echo "and then remove points from the wordlist : sed -i 's/\.//' tlds.txt "
 
 else
 
