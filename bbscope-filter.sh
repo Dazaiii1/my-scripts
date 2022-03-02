@@ -10,19 +10,20 @@ else
 	mkdir results
 	mkdir tld-enum
 
-		# Grab ip addresses and ranges
+	# Grab ip addresses and ranges
 	cat $1 | grep '[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}' | tee results/ips.txt &> /dev/null
 
 	# Filter Wildcard Domains to be able to run Subdomain Enumeration on 'em
 
-	cat $1 | grep '\*' | sed 's/http:\/\///;s/https:\/\///;s/^\*\.//;s/^[\*]\{1,2\}[a-z]\{1,100\}\*//;s/^[a-z]\{1,50\}\*//;s/[A-Za-z]\{1,50\}\.\*\.//;s/^\.//' | grep -v "github\.com" | grep '[A-Za-z]' | sed 's/\/\*//' | sed 's/\/.*//' | grep "\." | grep -v "\.\*" | tee results/wildcard.txt &> /dev/null
-
-	cat $1 | grep '\*' | sed 's/http:\/\///;s/https:\/\///;s/^\*\.//;s/^[\*]\{1,2\}[a-z]\{1,100\}\*//;s/^[a-z]\{1,50\}\*//;s/[A-Za-z]\{1,50\}\.\*\.//;s/^\.//' | grep -v "github\.com" | grep '[A-Za-z]' | sed 's/\/\*//' | sed 's/\/.*//' | grep "\." | grep "\.\*" | tee tld-enum/urls.txt &> /dev/null
-
+	cat $1 | grep  '^*\|\*\.' | sed 's/,/\n/g' | sed 's/https:\/\///;s/http:\/\///;s/\/.*//;s/^\*\.//;s/^[A-Za-z]\{1,60\}\-\*\.//;s/^[A-Za-z]\{1,60\}\*\.//;s/^\s//;s/^\*$//;s/^\*\.//;s/[A-Za-z]\{1,60\}\.\*\.//;s/^\*\-[A-Za-z]\{1,60\}\-\*\.//;s/^\*//;s/[a-zA-Z]\{1,60\}\-[a-zA-Z]\{1,60\}\*\.//;s/www\.paypal\-\*\.com//' | grep -v '*$' | sort -u | tee results/wildcard.txt &> /dev/null
+	
+	# Save those domains who need tld enum 
+	cat $1 | sed 's/https:\/\///;s/http:\/\///;s/\*\.\*//' | grep '^\*' | grep '\.\*$' | sed 's/^\*\.//' | tee tld-enum/urls-wildcard.txt &> /dev/null
+	cat $1 | sed 's/https:\/\///;s/http:\/\///;s/\*\.\*//' | grep -v '^\*\.' | grep '\.\*$' | tee tld-enum/urls-domains.txt &> /dev/null
 
 	# domains.txt
 
-	cat $1 | grep -v '\*' | grep -v "^com\." | grep -v '[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}' | cut -d "/" -f3 | grep -v 'github\.com' | grep '[A-Za-z]' | grep -v "NO_IN_SCOPE_TABLE" | grep -v '(\|)\|Desktop Application' | grep '\.' | tee results/domains.txt &> /dev/null
+	cat $1 | grep -v '^\*\.\|NO_IN_SCOPE_TABLE\|^com\.' | grep '\.' | sed 's/https:\/\///;s/http:\/\///;s/\/.*//' | sort -u | grep -v '\.\*$' | sed 's/,/\n/g' | grep -v '*\|\s' |  sed 's/.*)\.//' | grep -v '[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\|\.apk$\|\.exe$' | tee results/domains.txt &> /dev/null
 
 	# PRINT 
 	echo -e '\n'
