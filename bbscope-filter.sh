@@ -4,7 +4,7 @@ if [ $1 = '-h' ]
 then 
 	echo "Example: "
 	echo "./bbscope-filter.sh file.txt"
-	echo "Note: This script is not perfect , It cleans up a lot of cases but you still have to do some manual work"
+	echo "Note: This script cleans up most of the cases but sometimes you may still have to do some manual work"
 
 else
 	mkdir results
