@@ -15,7 +15,7 @@ else
 
 	# Filter Wildcard Domains to be able to run Subdomain Enumeration on 'em
 
-	cat $1 | grep  '^*\|\*\.' | sed 's/,/\n/g' | sed 's/https:\/\///;s/http:\/\///;s/\/.*//;s/^\*\.//;s/^[A-Za-z]\{1,60\}\-\*\.//;s/^[A-Za-z]\{1,60\}\*\.//;s/^\s//;s/^\*$//;s/^\*\.//;s/[A-Za-z]\{1,60\}\.\*\.//;s/^\*\-[A-Za-z]\{1,60\}\-\*\.//;s/^\*//;s/[a-zA-Z]\{1,60\}\-[a-zA-Z]\{1,60\}\*\.//;s/www\.paypal\-\*\.com//' | grep -v '*$' | sort -u | tee results/wildcard.txt &> /dev/null
+	cat $1 | grep  '^*\|\*\.' | sed 's/,/\n/g' | sed 's/https:\/\///;s/http:\/\///;s/\/.*//;s/^\*\.//;s/^[A-Za-z]\{1,60\}\-\*\.//;s/^[A-Za-z]\{1,60\}\*\.//;s/^\s//;s/^\*$//;s/^\*\.//;s/[A-Za-z]\{1,60\}\.\*\.//;s/^\*\-[A-Za-z]\{1,60\}\-\*\.//;s/^\*//;s/[a-zA-Z]\{1,60\}\-[a-zA-Z]\{1,60\}\*\.//;s/www\.paypal\-\*\.com//' | grep -v '*$' | sort -u | grep -v '\s' | sed 's/^[A-Za-z]\{1,5\}\*\.//' | sed 's/^\-[a-zA-Z]\{1,20\}\-[a-zA-Z]\{1,20\}\-\*\.//' | sort -u | tee results/wildcard.txt &> /dev/null
 	
 	# Save those domains who need tld enum 
 	cat $1 | sed 's/https:\/\///;s/http:\/\///;s/\*\.\*//' | grep '^\*' | grep '\.\*$' | sed 's/^\*\.//' | tee tld-enum/urls-wildcard.txt &> /dev/null
