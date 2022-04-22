@@ -38,8 +38,8 @@ def get_driver():
     options = webdriver.ChromeOptions()
     options.add_argument("--headless")
     driver = webdriver.Chrome(options=options)
-    capa = DesiredCapabilities.FIREFOX
-    capa["pageLoadStrategy"] = "none"
+    capa = DesiredCapabilities.CHROME
+    capa["F"] = "none"
     setattr(threadLocal, 'driver', driver)
   return driver
 
