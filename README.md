@@ -1,1 +1,1 @@
-I will put here my small automation scripts :)
+I will put here my automation scripts for bug bounty :)
