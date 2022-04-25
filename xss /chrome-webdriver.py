@@ -27,8 +27,7 @@ def telegram_bot_sendtext(bot_message):
    send_text = 'https://api.telegram.org/bot' + bot_token + '/sendMessage?chat_id=' + bot_chatID + '&parse_mode=Markdown&text=' + bot_message
 
    response = requests.get(send_text)
-'''
-
+'''   
 threadLocal = threading.local()
 # Create a driver
 def get_driver():
@@ -64,5 +63,9 @@ def work():
             continue
     f.close()
 
+def main():
+    with ThreadPoolExecutor(max_workers=50) as executor:
+        task = executor.submit(work)
+
 if __name__ == '__main__':
-    work()
+    main()
