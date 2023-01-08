@@ -28,7 +28,7 @@ func sqli_checker(){
         start := time.Now()
 
         client := http.Client{
-                //Timeout : 14 * time.Second,
+                Timeout : 14 * time.Second,
         }
 
         req , err := http.NewRequest("GET", url, nil)
@@ -48,6 +48,11 @@ func sqli_checker(){
         
         elapsed := time.Since(start).Seconds()
 
-        fmt.Println(elapsed)
+        //fmt.Println(elapsed)
 
+        if elapsed  > 5.99 && elapsed < 7.0 {
+                fmt.Println("Vulnerable to sqli => ", url)
+        } else{
+                fmt.Println("Not Vulnerable to sqli => ", url)
+        }
 }
