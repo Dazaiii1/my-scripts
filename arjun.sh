@@ -1,0 +1,1 @@
+cat $1 | while read url; do arjun -u $url -t 21 | tr -cd '\11\12\15\40-\176' | sed 's/\[0m//' | grep "Heuristic\|factor" | sed 's/\[.*\]//;s/Heuristic.*://;s/name://' | tr ',' '\n' | grep -v factor | sed 's/ //;s/ //;s/\[0m//' | while read output ; do echo $url?$output= ;done ;done
