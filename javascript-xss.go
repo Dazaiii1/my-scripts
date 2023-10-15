@@ -51,7 +51,7 @@ func combineParameters(variables []string) string {
 }
 
 func extractEndpoints(jsCode string) []string {
-	endpointRegex := regexp.MustCompile(`/[^\s'"}{)(,^]+|[^/\s'"}{)(,^]+/[^\s'"}{)(,^]+|(https?://[^\s'"}{)(,^]+)`)
+	endpointRegex := regexp.MustCompile(`/[^\s'"}{)(,^]+|[^/\s'"}{)(,^]+/[^\s'"}{)(,^]+|(https?://[^\s'"}{)(,^]+)|\\[^\s'"}{)(,^]+`)
 	matches := endpointRegex.FindAllString(jsCode, -1)
 	endpoints := make([]string, len(matches))
 
@@ -61,6 +61,7 @@ func extractEndpoints(jsCode string) []string {
 			match = strings.TrimPrefix(match, "https://")
 		}
 		match = strings.ReplaceAll(match, "//", "/")
+		match = strings.ReplaceAll(match, "\\", "/") // Replace backslashes with slashes
 		endpoints[i] = match
 	}
 
@@ -164,7 +165,7 @@ func main() {
 	}
 
 	baseURLPattern := strings.ReplaceAll(baseURL, ".", "\\.")
-	sedCmd := fmt.Sprintf("s|^/%s||; s/:.*//; /\\*/d; /\\]/d; /\\[/d; /</d; />/d; /\\$/d; /\\;/d; /\\|/d; /\\}/d; /\\{/d; /\\(/d; /\\)/d; /\\!/d; /\\,/d", baseURLPattern)
+	sedCmd := fmt.Sprintf("s|^/%s||; s/:.*//; /\\*/d; /\\]/d; /\\[/d; /</d; />/d; /\\$/d; /\\;/d; /\\|/d; /\\}/d; /\\{/d; /\\(/d; /\\)/d; /\\!/d; /\\,/d; s/u002F//g", baseURLPattern)
 
 	cmd := exec.Command("sed", "-E", sedCmd)
 	cmd.Stdin = strings.NewReader(strings.Join(modifiedEndpoints, "\n"))
