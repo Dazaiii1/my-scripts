@@ -18,14 +18,13 @@ parser = argparse.ArgumentParser(epilog=textwrap.dedent('''\
     '''))
 parser.add_argument("-file", "--file", dest = "file", help="Name of the file")
 args = parser.parse_args()
-'''
+
 #Telegram bot
 def telegram_bot_sendtext(bot_message):
-   bot_token =  'TOKEN'
-   bot_chatID = 'ID'
+   bot_token =  '5289951842:AAGKQtM3sBS-M9bWi8pZeLfafRnfgPlHTt0'
+   bot_chatID = '1200736873'
    send_text = 'https://api.telegram.org/bot' + bot_token + '/sendMessage?chat_id=' + bot_chatID + '&parse_mode=Markdown&text=' + bot_message
    response = requests.get(send_text)
-'''
 
 threadLocal = threading.local()
 # Create a driver
@@ -55,7 +54,7 @@ def work():
             try :
                 alert.accept()
                 print("Vulnerable:",url)
-                #telegram_bot_sendtext("Hit")
+                telegram_bot_sendtext("Hit: "+url)
             except:
                 print("Not Vulnerable:",url)
                 continue
