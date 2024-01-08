@@ -1,4 +1,10 @@
 #!/usr/bin/python3
+# Importand Notes about versions :
+# 1 - For this to work , you need google-chrome version 116 : https://unix.stackexchange.com/questions/233185/install-older-versions-of-google-chrome-stable-on-ubuntu-14-10
+# 2 - Chromedriver
+# 3 - python3.12
+
+
 from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium import webdriver
 from selenium.webdriver.common.alert import Alert
